@@ -24,17 +24,22 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Office365::EWS::Client",
   "PREREQ_PM" => {
+    "Carp" => 0,
     "EWS::Client" => 0,
     "EWS::Client::Role::SOAP" => 0,
+    "Encode" => 0,
     "Moose" => 0,
     "Moose::Role" => 0,
+    "MooseX::Iterator" => 0,
     "strict" => 0,
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
+    "Data::Dumper" => 0,
+    "DateTime" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "1.140390",
+  "VERSION" => "1.142410",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -42,10 +47,15 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
+  "Carp" => 0,
+  "Data::Dumper" => 0,
+  "DateTime" => 0,
   "EWS::Client" => 0,
   "EWS::Client::Role::SOAP" => 0,
+  "Encode" => 0,
   "Moose" => 0,
   "Moose::Role" => 0,
+  "MooseX::Iterator" => 0,
   "Test::More" => 0,
   "strict" => 0,
   "warnings" => 0

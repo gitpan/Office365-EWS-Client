@@ -2,10 +2,22 @@ use strict;
 use warnings;
 package Office365::EWS::Client;
 use Moose;
+use Office365::EWS::Client::GAL;
 extends 'EWS::Client';
 with qw/
     Office365::EWS::Client::Role::SOAP
+    Office365::EWS::Client::Role::FindPeople
+    Office365::EWS::GAL::Role::Reader
 /;
+has gal => (
+    is => 'ro',
+    isa => 'Office365::EWS::Client::GAL',
+    lazy_build => 1,
+);
+sub _build_gal {
+    my $self = shift;
+    return Office365::EWS::Client::GAL->new({ client => $self });
+}
 no Moose;
 1;
 
@@ -23,7 +35,7 @@ Office365::EWS::Client - Office 365 Exchange Web Services client
 
 =head1 VERSION
 
-version 1.140390
+version 1.142410
 
 =head1 SYNOPSIS
 
@@ -52,6 +64,15 @@ Then perform operations on the Exchange server:
  }
  
  my $contacts = $ews->contacts->retrieve;
+
+ my $gal = $ews->gal->retrieve( { querystring => "John Doe" } );
+ if ( $gal->count() > 0 ) {
+   while ($gal->has_next) {
+     my $entry = $gal->next;
+     print $entry->DisplayName, "\n";
+     print $entry->EmailAddress->{EmailAddress}, "\n\n";
+   }
+ }
 
 =head1 DESCRIPTION
 
